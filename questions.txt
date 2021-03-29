@@ -1,0 +1,18 @@
+
+1) *provided in 'final_records.json'
+
+2) The main thing I would change would be to have the 'actions' (add/remove/override) part of the api path and not
+something you have to determine from the payload data. This not only makes the api contract confusing but can also
+contribute performance issues. Regarding my own implementation- since I only had a single entry point for all of these
+"requests" in the form of a chronological log, I had to further complicate this logic in order to determine what kind
+of edit I should route the payload to.
+
+3) In a nutshell, you want a way to make less requests that each include more data. In both of these examples, you would
+want to have separate 'batch' endpoints for whatever type of resource needs bulk edits. If a client creates a new
+location, and wants to link a huge number of doctors to it, you could have a batch endpoint for a location resource,
+that takes a list of provider identifiers. You can have that same endpoint work in a similar way for any resource a
+location is bound to in your data model (eg: a foreign key in a SQL DB). In terms of REST protocol, a PATCH or POST
+would be best suited to this operation.
+
+4) If you include the time it took to completely read and understand both the task and the documentation, It was about
+4 hours of actual work for me by the time I considered it functioning correctly.

@@ -62,8 +62,8 @@ class ProviderCollection(object):
                         getattr(self, key)(npi, attr, obj)  # calls method by name based on action
                 elif len(parts) == 5:  # custom fields
                     if key == 'remove_fields':
-                        for obj in req['remove_fields']:  # loop to ignore empty list of fields
-                            self.remove_custom(npi, obj)
+                        for field in req['remove_fields']:  # loop to ignore empty list of fields
+                            self.remove_custom(npi, field)
                     else:
                         self.update_custom(npi, key, val)
 
